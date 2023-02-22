@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/package",
-	"name": "strapi-plugin-website-builder",
+	"name": "@kl13nt/strapi-plugin-website-builder",
 	"version": "2.3.0",
 	"description": "A plugin for Strapi Headless CMS that provides the ability to trigger website builds manually, periodically or through model events.",
 	"scripts": {
@@ -17,13 +17,13 @@
 			"url": "https://github.com/ComfortablyCoding"
 		}
 	],
-	"homepage": "https://github.com/ComfortablyCoding/strapi-plugin-website-builder#readme",
+	"homepage": "https://github.com/KL13NT/strapi-plugin-website-builder#readme",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ComfortablyCoding/strapi-plugin-website-builder.git"
+		"url": "https://github.com/KL13NT/strapi-plugin-website-builder.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ComfortablyCoding/strapi-plugin-website-builder/issues"
+		"url": "https://github.com/KL13NT/strapi-plugin-website-builder/issues"
 	},
 	"dependencies": {},
 	"devDependencies": {

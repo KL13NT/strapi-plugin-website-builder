@@ -2,23 +2,26 @@ import React from 'react';
 import { Table, Tbody } from '@strapi/design-system/Table';
 import { LogTableHeaders } from './LogTableHeaders';
 import { LogTableRow } from './LogTableRow';
-import { LogTableRowEmpty } from './LogTableRowEmpty';
 import { useReactQuery } from '../../hooks/useReactQuery';
 
-export const LogTable = () => {
-	const { buildLogQueries } = useReactQuery();
+export const LogTable = ({ logs }) => {
+	const { buildLogMutations } = useReactQuery();
 
-	const { isLoading, data } = buildLogQueries.getBuildLogs();
+	const handleBuildLogDelete = async (id) => {
+		try {
+			await buildLogMutations.delete.mutate({ id });
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 		<Table>
 			<LogTableHeaders />
 			<Tbody>
-				{!isLoading && data.logs.length ? (
-					data.logs.map((log) => <LogTableRow key={log.id} log={log} />)
-				) : (
-					<LogTableRowEmpty />
-				)}
+				{logs.map((log) => (
+					<LogTableRow key={log.id} log={log} handleBuildLogDelete={handleBuildLogDelete} />
+				))}
 			</Tbody>
 		</Table>
 	);

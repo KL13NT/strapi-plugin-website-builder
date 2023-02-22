@@ -6,11 +6,12 @@ const fetchBuildLogs = () => {
 	return requestPluginEndpoint(route);
 };
 
-const createBuildLog = ({ status }) => {
+const createBuildLog = ({ status, response }) => {
 	return requestPluginEndpoint('actions', {
 		method: 'POST',
 		body: {
 			status,
+			response,
 		},
 	});
 };

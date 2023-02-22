@@ -4,21 +4,35 @@ import { Tr, Td } from '@strapi/design-system/Table';
 import { Typography } from '@strapi/design-system/Typography';
 import { IconButton } from '@strapi/design-system/IconButton';
 import Trash from '@strapi/icons/Trash';
-import { useReactQuery } from '../../../hooks/useReactQuery';
 
-const LogTableRow = ({ log }) => {
-	const { id, status, trigger, createdAt } = log;
-	const { buildLogMutations } = useReactQuery();
+const getStatusColor = (status) => {
+	if (status === '#') {
+		return 'neutral600';
+	} else if (status >= 200 && status < 400) {
+		return 'success600';
+	} else {
+		return 'danger600';
+	}
+};
 
-	const handleBuildLogDelete = async (id) => {
-		try {
-			await buildLogMutations.delete.mutate({ id });
-		} catch (error) {
-			console.error(error);
-		}
-	};
+const getStatusText = (status) => {
+	if (status === '#') {
+		return 'Pending';
+	} else if (status >= 200 && status < 400) {
+		return 'Success';
+	} else {
+		return 'Failed';
+	}
+};
 
-	const isSuccessFullBuild = status >= 200 && 400 > status;
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+	hour12: true,
+	timeStyle: 'short',
+	dateStyle: 'long',
+});
+
+const LogTableRow = ({ log, handleBuildLogDelete }) => {
+	const { id, status, trigger, createdAt, response } = log;
 
 	return (
 		<Tr>
@@ -26,15 +40,16 @@ const LogTableRow = ({ log }) => {
 				<Typography textColor="neutral900">{id}</Typography>
 			</Td>
 			<Td>
-				<Typography textColor={isSuccessFullBuild ? 'success500' : 'danger500'}>
-					{status}
-				</Typography>
+				<Typography textColor={getStatusColor(status)}>{getStatusText(status)}</Typography>
+			</Td>
+			<Td>
+				<Typography textColor="neutral900">{response || 'No response logged'}</Typography>
 			</Td>
 			<Td>
 				<Typography textColor="neutral900">{trigger}</Typography>
 			</Td>
 			<Td>
-				<Typography textColor="neutral900">{createdAt}</Typography>
+				<Typography textColor="neutral900">{dateFormatter.format(new Date(createdAt))}</Typography>
 			</Td>
 			<Td>
 				<IconButton

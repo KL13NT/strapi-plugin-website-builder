@@ -4,11 +4,7 @@ import { build, buildLogs } from '../api';
 import { getTrad } from '../utils/getTrad';
 
 const { triggerBuild } = build;
-const { fetchBuildLogs, createBuildLog, deleteBuildLog } = buildLogs;
-
-const getQuerykey = ({ base }) => {
-	return [base];
-};
+const { fetchBuildLogs, createBuildLog, deleteBuildLog, clearLogs } = buildLogs;
 
 const useReactQuery = () => {
 	const queryClient = useQueryClient();
@@ -37,11 +33,8 @@ const useReactQuery = () => {
 	const buildMutations = {
 		create: useMutation(triggerBuild, {
 			onSuccess: () => {
-				const querykey = getQuerykey({
-					base: 'get-build-logs',
-				});
 				handleSuccess({
-					invalidate: querykey,
+					invalidate: ['get-build-logs'],
 					notification: {
 						type: 'success',
 						tradId: `build.notification.trigger.success`,
@@ -55,18 +48,19 @@ const useReactQuery = () => {
 	// build logs
 	const buildLogQueries = {
 		getBuildLogs: (params) => {
-			const queryKey = getQuerykey({
-				base: 'get-build-logs',
-			});
-			return useQuery(queryKey, () => fetchBuildLogs(params).then((r) => r.data));
+			return useQuery('get-build-logs', () => fetchBuildLogs(params).then((r) => r.data));
 		},
 	};
 
 	const buildLogMutations = {
 		delete: useMutation(deleteBuildLog, {
 			onSuccess: () => {
-				const querykey = getQuerykey({
-					base: 'get-build-logs',
+				handleSuccess({
+					invalidate: ['get-build-logs'],
+					notification: {
+						type: 'success',
+						tradId: `build-logs.notification.delete.success`,
+					},
 				});
 				handleSuccess({
 					invalidate: querykey,
@@ -81,11 +75,8 @@ const useReactQuery = () => {
 
 		create: useMutation(createBuildLog, {
 			onSuccess: () => {
-				const querykey = getQuerykey({
-					base: 'get-build-logs',
-				});
 				handleSuccess({
-					invalidate: querykey,
+					invalidate: ['get-build-logs'],
 				});
 			},
 			onError: (error) => handleError(error),

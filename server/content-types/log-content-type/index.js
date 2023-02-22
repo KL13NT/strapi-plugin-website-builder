@@ -24,6 +24,9 @@ module.exports = {
 		status: {
 			type: 'integer',
 		},
+		response: {
+			type: 'string',
+		},
 		trigger: {
 			type: 'enumeration',
 			enum: ['manual', 'cron', 'event'],

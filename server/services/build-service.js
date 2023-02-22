@@ -61,18 +61,24 @@ module.exports = ({ strapi }) => ({
 	 */
 	async build({ record, settings, trigger }) {
 		let status = 500;
+		let response = '';
+
 		try {
-			let requestConfig = this.buildRequestConfig({ settings, trigger, record });
+			const requestConfig = this.buildRequestConfig({ settings, trigger, record });
 			const buildResponse = await axios(requestConfig);
+
 			status = buildResponse.status;
+			response = 'Successfully deployed changes';
 		} catch (error) {
 			if (error.response) {
 				status = error.response.status;
+				response = error.response.data.message;
 			}
 		} finally {
 			getPluginService(strapi, 'logService').create({
 				trigger: trigger.type,
 				status,
+				response,
 				timestamp: Date.now(),
 			});
 		}

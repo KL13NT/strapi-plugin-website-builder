@@ -40,4 +40,13 @@ module.exports = ({ strapi }) => ({
 	delete(id) {
 		return strapi.entityService.delete(uid, id);
 	},
+
+	/**
+	 * Deletes all logs
+	 */
+	clear() {
+		return strapi.db.query(uid).deleteMany({});
+
+		// return strapi.entityService.delete(uid, id);
+	},
 });

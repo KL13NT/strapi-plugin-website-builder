@@ -45,4 +45,15 @@ module.exports = ({ strapi }) => ({
 
 		ctx.send({ data: { log: deletedLog } });
 	},
+
+	/**
+	 *  Delete a log
+	 *
+	 * @return {Object} log
+	 */
+	async clear(ctx) {
+		await getPluginService(strapi, 'logService').clear();
+
+		ctx.send({ data: {} });
+	},
 });

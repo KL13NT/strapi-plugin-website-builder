@@ -62,11 +62,17 @@ const useReactQuery = () => {
 						tradId: `build-logs.notification.delete.success`,
 					},
 				});
+			},
+			onError: (error) => handleError(error),
+		}),
+
+		clear: useMutation(clearLogs, {
+			onSuccess: () => {
 				handleSuccess({
-					invalidate: querykey,
+					invalidate: ['get-build-logs'],
 					notification: {
 						type: 'success',
-						tradId: `build-logs.notification.delete.success`,
+						tradId: `build-logs.notification.clear.success`,
 					},
 				});
 			},

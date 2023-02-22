@@ -22,4 +22,10 @@ const deleteBuildLog = ({ id }) => {
 	});
 };
 
-export { fetchBuildLogs, deleteBuildLog, createBuildLog };
+const clearLogs = () => {
+	return requestPluginEndpoint(route, {
+		method: 'DELETE',
+	});
+};
+
+export { fetchBuildLogs, deleteBuildLog, createBuildLog, clearLogs };

@@ -16,4 +16,9 @@ module.exports = [
 		path: '/logs/:id',
 		handler: 'logController.delete',
 	},
+	{
+		method: 'DELETE',
+		path: '/logs',
+		handler: 'logController.clear',
+	},
 ];

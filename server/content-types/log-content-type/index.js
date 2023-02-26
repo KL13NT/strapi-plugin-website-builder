@@ -25,7 +25,7 @@ module.exports = {
 			type: 'integer',
 		},
 		response: {
-			type: 'string',
+			type: 'richtext',
 		},
 		trigger: {
 			type: 'enumeration',

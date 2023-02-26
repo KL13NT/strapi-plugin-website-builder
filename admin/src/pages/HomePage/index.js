@@ -10,6 +10,7 @@ import { NoContent } from '@strapi/helper-plugin';
 import { Box } from '@strapi/design-system/Box';
 import { Button } from '@strapi/design-system/Button';
 import { Stack } from '@strapi/design-system/Stack';
+import { Typography } from '@strapi/design-system/Typography';
 import { HeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
 import { LogTable } from '../../components/LogTable';
 
@@ -62,15 +63,22 @@ const HomePage = () => {
 					</Button>
 				}
 				primaryAction={
-					<Button
-						onClick={handleClear}
-						variant="danger-light"
-						startIcon={<Trash />}
-						size="S"
-						disabled={isBuildPending}
-					>
-						Clear builds
-					</Button>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						{logs.length > 15 ? (
+							<Typography textColor="danger600" style={{ marginInlineEnd: '1rem' }}>
+								The log is too long, recommended to clear now
+							</Typography>
+						) : null}
+						<Button
+							onClick={handleClear}
+							variant="danger-light"
+							startIcon={<Trash />}
+							size="S"
+							disabled={isBuildPending}
+						>
+							Clear builds
+						</Button>
+					</div>
 				}
 				title="Website Builder"
 				subtitle="The right way to build websites."

@@ -43,7 +43,15 @@ const LogTableRow = ({ log, handleBuildLogDelete }) => {
 				<Typography textColor={getStatusColor(status)}>{getStatusText(status)}</Typography>
 			</Td>
 			<Td>
-				<Typography textColor="neutral900">{response || 'No response logged'}</Typography>
+				<Typography
+					textColor="neutral900"
+					style={{
+						wordWrap: 'break-word',
+						whiteSpace: 'break-spaces',
+					}}
+				>
+					{response || 'No response logged'}
+				</Typography>
 			</Td>
 			<Td>
 				<Typography textColor="neutral900">{trigger}</Typography>
@@ -69,7 +77,9 @@ LogTableRow.propTypes = {
 		status: PropTypes.number.isRequired,
 		trigger: PropTypes.string.isRequired,
 		createdAt: PropTypes.string.isRequired,
+		response: PropTypes.string.isRequired,
 	}).isRequired,
+	handleBuildLogDelete: PropTypes.func.isRequired,
 };
 
 export { LogTableRow };
